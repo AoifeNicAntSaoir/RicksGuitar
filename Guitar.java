@@ -1,10 +1,13 @@
+package ricksGuitar;
 public class Guitar {
 
-  private String serialNumber, model;
+  private String serialNumber;
+  private String model;
   private double price;
   private Builder builder;
   private Type type;
-  private Wood backWood, topWood;
+  private Wood backWood;
+  private Wood topWood;
 
   public Guitar(String serialNumber, double price,
                 Builder builder, String model, Type type,
