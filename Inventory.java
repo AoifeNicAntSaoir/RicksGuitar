@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Inventory {
-  private List guitars;
+  private List<Guitar> guitars;
 
   public Inventory() {
     guitars = new LinkedList();
@@ -31,7 +31,7 @@ public class Inventory {
   public List search(Guitar searchGuitar) {
     List matchingGuitars = new LinkedList();
     for (Iterator i = guitars.iterator(); i.hasNext(); ) {
-      Guitar guitar = (Guitar)i.next();
+      Guitar guitar = i.next();
       // Ignore serial number since that's unique
       // Ignore price since that's unique
       if (searchGuitar.getBuilder() != guitar.getBuilder())
