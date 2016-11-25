@@ -1,7 +1,3 @@
-package ricksGuitar;
-public enum Builder { 
-
-  FENDER, MARTIN, GIBSON, COLLINGS, OLSON, RYAN, PRS, ANY;
-
-
+public enum Builder {
+    COLLINGS,GIBSON,FENDER,OLSON,PRS,MARTIN,RYAN;
 }

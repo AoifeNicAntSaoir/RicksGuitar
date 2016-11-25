@@ -1,6 +1,3 @@
-package ricksGuitar;
-public enum Type { 
-
-  ACOUSTIC, ELECTRIC;
-
+public enum Type {
+    ACOUSTIC,ELECTRIC;
 }

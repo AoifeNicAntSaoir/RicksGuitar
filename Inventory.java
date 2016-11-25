@@ -1,53 +1,41 @@
-package ricksGuitar;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-  private List<Guitar> guitars;
+    private final List<Instrument> inventory;
 
-  public Inventory() {
-    guitars = new LinkedList();
-  }
-
-  public void addGuitar(String serialNumber, double price,
-                        Builder builder, String model,
-                        Type type, Wood backWood, Wood topWood) {
-    Guitar guitar = new Guitar(serialNumber, price, builder,
-                               model, type, backWood, topWood);
-    guitars.add(guitar);
-  }
-
-  public Guitar getGuitar(String serialNumber) {
-    for (Iterator i = guitars.iterator(); i.hasNext(); ) {
-      Guitar guitar = (Guitar)i.next();
-      if (guitar.getSerialNumber().equals(serialNumber)) {
-        return guitar;
-      }
+    public Inventory(List<Instrument> inventory) {
+        this.inventory = inventory;
     }
-    return null;
-  }
 
-  public List search(Guitar searchGuitar) {
-    List matchingGuitars = new LinkedList();
-    for (Iterator i = guitars.iterator(); i.hasNext(); ) {
-      Guitar guitar = i.next();
-      // Ignore serial number since that's unique
-      // Ignore price since that's unique
-      if (searchGuitar.getBuilder() != guitar.getBuilder())
-        continue;
-      String model = searchGuitar.getModel().toLowerCase();
-      if ((model != null) && (!model.equals("")) &&
-          (!model.equals(guitar.getModel().toLowerCase())))
-        continue;
-      if (searchGuitar.getType() != guitar.getType())
-        continue;
-      if (searchGuitar.getBackWood() != guitar.getBackWood())
-        continue;
-      if (searchGuitar.getTopWood() != guitar.getTopWood())
-        continue;
-      matchingGuitars.add(guitar);
+    public void addInstrument(String serialNumber, double price,
+                              InstrumentSpec guitarSpec) {
+        Instrument instrument;
+        if (guitarSpec instanceof GuitarSpec) {
+            instrument = new Guitar(serialNumber, price, (GuitarSpec) guitarSpec);
+        } else {
+            instrument = new Mandolin(serialNumber, price, guitarSpec);
+        }
+        inventory.add(instrument);
     }
-    return matchingGuitars;
-  }
+
+    public Instrument getInstrument(String serialNumber) {
+        for (Instrument instrument : inventory) {
+            if (instrument.getSerialNumber().equals(serialNumber)) {
+                return instrument;
+            }
+        }
+        return null;
+    }
+
+    public List<Instrument> search(InstrumentSpec spec) {
+        List<Instrument> matchingInstruments = new ArrayList<>();
+        for (Instrument instrument : inventory) {
+            InstrumentSpec instrumentSpec = instrument.getSpec();
+            if (instrumentSpec.matches(spec)) {
+                matchingInstruments.add(instrument);
+            }
+        }
+        return matchingInstruments;
+    }
 }
